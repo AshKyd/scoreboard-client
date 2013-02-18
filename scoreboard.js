@@ -6,9 +6,7 @@
 		options = _.extend({
 			webStorageKey : 'scoreboard',
 			classes : [
-				'easy',
-				'medium',
-				'hard'
+				'regular'
 			],
 			fields : {
 				time : {type:'average'},
@@ -87,7 +85,6 @@
 			
 			if(fieldDef.streak){
 				field.lastVal = 0;
-				field.streak = null;
 				field.streakLength = 0;
 			}
 			
@@ -127,10 +124,8 @@
 			
 			if(fieldDef.streak){
 				if(field.lastVal === null || field.val > field.lastVal){
-					field.streak = true;
 					field.streakLength++;
 				} else {
-					field.streak = false;
 					field.streakLength = 0;
 				}
 				field.lastVal = field.val;

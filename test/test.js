@@ -65,24 +65,20 @@ describe('Scoreboard', function(){
 				assert.equal(0, myScore.data.regular.won.val);
 				
 				myScore.updateField('regular','won',1);
-				assert.equal(true, myScore.data.regular.won.streak);
 				assert.equal(1, myScore.data.regular.won.streakLength);
 				
 				myScore.updateField('regular','won',1);
 				myScore.updateField('regular','won',1);
 				myScore.updateField('regular','won',1);
 				myScore.updateField('regular','won',1);
-				assert.equal(true, myScore.data.regular.won.streak);
 				assert.equal(5, myScore.data.regular.won.streakLength);
 				
 				myScore.updateField('regular','won',0);
-				assert.equal(false, myScore.data.regular.won.streak);
 				assert.equal(0, myScore.data.regular.won.streakLength);
 				
 				myScore.updateField('regular','won',1);
 				myScore.updateField('regular','won',1);
 				myScore.updateField('regular','won',1);
-				assert.equal(true, myScore.data.regular.won.streak);
 				assert.equal(3, myScore.data.regular.won.streakLength);
 			});
 			
