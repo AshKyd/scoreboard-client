@@ -1,7 +1,8 @@
 (function(){
-	
-	var webStorage = {};
 
+	if(typeof localStorage == 'undefined'){
+		localStorage = {};
+	}
 	this.Scoreboard = function(options){
 		options = _.extend({
 			webStorageKey : 'scoreboard',
@@ -34,7 +35,7 @@
 				throw 'Callback not defined in Scoreboard.load();';
 			}
 			
-			var data = webStorage[this.options.webStorageKey];
+			var data = localStorage[this.options.webStorageKey];
 			
 			if(typeof(data) == 'undefined'){
 				this.initialise();
@@ -145,13 +146,13 @@
 		},
 		
 		resetScores : function(){
-			delete webStorage[this.options.webStorageKey];
+			delete localStorage[this.options.webStorageKey];
 			this.initialise();
 		},
 		
 		save : function(callback){
 			callback = typeof callback == 'function' ? callback : function(){};
-			webStorage[this.options.webStorageKey] = JSON.stringify(this.data);
+			localStorage[this.options.webStorageKey] = JSON.stringify(this.data);
 			callback(this);
 		}
 		
