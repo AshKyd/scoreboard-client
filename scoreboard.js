@@ -6,7 +6,9 @@
 		options = _.extend({
 			webStorageKey : 'scoreboard',
 			classes : [
-				'regular'
+				'easy',
+				'medium',
+				'hard'
 			],
 			fields : {
 				time : {type:'average'},
@@ -141,6 +143,10 @@
 		
 		getField : function(classname,fieldName){
 			return this.data[classname][fieldName].val;
+		},
+		
+		getWinningStreak : function(classname,fieldName){
+			return this.data[classname][fieldName].streakLength;
 		},
 		
 		resetScores : function(){
