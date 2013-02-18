@@ -133,6 +133,27 @@ The data is stored in the following format:
             "itemName2" : { … }
         }
     }
+Updating Data
+===============
+The same as retrieving data, you can set either a single key or a number
+of keys at a time.
+
+Set one value
+---------------
+To set a single value:
+
+    myScores.updateField(classname,fieldName,value);
+
+Set several values
+------------------
+To set multiple values:
+
+    myScores.updateFields(classname,{
+		fieldName1 : value,
+		fieldName2 : value,
+		fieldName3 : […]
+    });
+
 
 Winning Streaks
 ===============
