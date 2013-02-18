@@ -18,71 +18,115 @@ describe('Scoreboard', function(){
 				}
 			});
 			
-			// Make sure the field is there.
-			assert.equal('object',typeof myScore.data.myTestDifficulty.trout);
+			myScore.load(function(){
 			
-			// Make sure defaults aren't used when we define our own.
-			assert.equal('undefined',typeof myScore.data.myTestDifficulty.time);
-			assert.equal('undefined',typeof myScore.data.regular);
-			
-			myScore.resetScores();
+				// Make sure the field is there.
+				assert.equal('object',typeof myScore.data.myTestDifficulty.trout);
+				
+				// Make sure defaults aren't used when we define our own.
+				assert.equal('undefined',typeof myScore.data.myTestDifficulty.time);
+				assert.equal('undefined',typeof myScore.data.regular);
+				
+				myScore.resetScores();
+			});
 		});
 		
 	});
 	
 	describe('insertion', function(){
-		it('should average values correctly', function(){
-			var myScore = new scoreboard.Scoreboard();
-			assert.equal(0, myScore.data.regular.moves.count);
-			
-			myScore.updatefield('regular','moves',10);
-			myScore.updatefield('regular','moves',10);
-			
-			assert.equal(2, myScore.data.regular.moves.count);
-			
-			myScore.updatefield('regular','moves',10);
-			myScore.updatefield('regular','moves',20);
-			
-			assert.equal(12.5, myScore.data.regular.moves.val);
-			assert.equal(4, myScore.data.regular.moves.count);
-			myScore.resetScores();
-		})
+		var myScore = new scoreboard.Scoreboard();
+		myScore.load(function(){
+				
+			it('should average values correctly', function(){
+				assert.equal(0, myScore.data.regular.moves.count);
+				
+				myScore.updateField('regular','moves',10);
+				myScore.updateField('regular','moves',10);
+				
+				assert.equal(2, myScore.data.regular.moves.count);
+				
+				myScore.updateField('regular','moves',10);
+				myScore.updateField('regular','moves',20);
+				
+				assert.equal(12.5, myScore.data.regular.moves.val);
+				assert.equal(4, myScore.data.regular.moves.count);
+			});
 
-		it('should sum values correctly', function(){
-			var myScore = new scoreboard.Scoreboard();
-			assert.equal(0, myScore.data.regular.games.val);
-			
-			myScore.updatefield('regular','games',10);
-			myScore.updatefield('regular','games',10);
-			
-			assert.equal(20, myScore.data.regular.games.val);
-			myScore.resetScores();
-		})
+			it('should sum values correctly', function(){
+				assert.equal(0, myScore.data.regular.games.val);
+				
+				myScore.updateField('regular','games',10);
+				myScore.updateField('regular','games',10);
+				
+				assert.equal(20, myScore.data.regular.games.val);
+			});
 
-		it('should track streaks correctly', function(){
-			var myScore = new scoreboard.Scoreboard();
-			assert.equal(0, myScore.data.regular.won.val);
+			it('should track streaks correctly', function(){
+				assert.equal(0, myScore.data.regular.won.val);
+				
+				myScore.updateField('regular','won',1);
+				assert.equal(true, myScore.data.regular.won.streak);
+				assert.equal(1, myScore.data.regular.won.streakLength);
+				
+				myScore.updateField('regular','won',1);
+				myScore.updateField('regular','won',1);
+				myScore.updateField('regular','won',1);
+				myScore.updateField('regular','won',1);
+				assert.equal(true, myScore.data.regular.won.streak);
+				assert.equal(5, myScore.data.regular.won.streakLength);
+				
+				myScore.updateField('regular','won',0);
+				assert.equal(false, myScore.data.regular.won.streak);
+				assert.equal(0, myScore.data.regular.won.streakLength);
+				
+				myScore.updateField('regular','won',1);
+				myScore.updateField('regular','won',1);
+				myScore.updateField('regular','won',1);
+				assert.equal(true, myScore.data.regular.won.streak);
+				assert.equal(3, myScore.data.regular.won.streakLength);
+			});
 			
-			myScore.updatefield('regular','won',1);
-			assert.equal(true, myScore.data.regular.won.streak);
-			assert.equal(1, myScore.data.regular.won.streakLength);
-			
-			myScore.updatefield('regular','won',1);
-			myScore.updatefield('regular','won',1);
-			myScore.updatefield('regular','won',1);
-			myScore.updatefield('regular','won',1);
-			assert.equal(true, myScore.data.regular.won.streak);
-			assert.equal(5, myScore.data.regular.won.streakLength);
-			
-			myScore.updatefield('regular','won',0);
-			assert.equal(false, myScore.data.regular.won.streak);
-			assert.equal(0, myScore.data.regular.won.streakLength);
-			
-			myScore.updatefield('regular','won',1);
-			myScore.updatefield('regular','won',1);
-			myScore.updatefield('regular','won',1);
-			assert.equal(true, myScore.data.regular.won.streak);
-			assert.equal(3, myScore.data.regular.won.streakLength);
-		})
-	})
+			it('should insert multiple values corrrectly',function(){
+				assert.equal(0, myScore.data.regular.scoreHighest.val);
+				assert.equal(0, myScore.data.regular.lost.val);
+				
+				myScore.updateFields('regular',{
+					scoreHighest : 555,
+					lost : 1
+				});
+				
+				assert.equal(555, myScore.data.regular.scoreHighest.val);
+				assert.equal(1, myScore.data.regular.lost.val);
+			});
+		});
+	});
+	
+	describe('saving', function(){
+		var myScore = new scoreboard.Scoreboard({
+			webStorageKey : 'loadsavetest',
+			classes : ['river'],
+			fields : {
+				trout : {type:'custom'}
+			}
+		});
+		
+		myScore.load(function(){
+				
+			it('should save and load correctly', function(){				
+				myScore.updateField('river','trout','plentiful');
+				assert.equal('plentiful', myScore.data.river.trout.val);
+				var wait = true;
+					
+				myScore.save(function(){
+					myScore.updateField('river','trout','dire');
+					assert.equal('dire', myScore.data.river.trout.val);
+					
+					myScore.load(function(){
+						assert.equal('plentiful', myScore.data.river.trout.val);
+						wait = false;
+					});
+				});
+			});
+		});
+	});
 })

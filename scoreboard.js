@@ -12,7 +12,7 @@
 				time : {type:'average'},
 				moves : {type:'average'},
 				scoreAverage : {type:'average'},
-				scoreHighest : {type:'average'},
+				scoreHighest : {type:'custom'},
 				games : {type:'addition'},
 				won : {
 					type : 'addition',
@@ -25,19 +25,24 @@
 			}
 		},options);
 		this.options = options;
-		this.load();
 	}
 
 	this.Scoreboard.prototype = {
 		
-		load : function(){
-			this.data = webStorage[this.options.webStorageKey];
-			
-			if(typeof(this.data) == 'undefined'){
-				this.initialise();
+		load : function(callback){
+			if(typeof callback != 'function'){
+				throw 'Callback not defined in Scoreboard.load();';
 			}
 			
-			return;
+			var data = webStorage[this.options.webStorageKey];
+			
+			if(typeof(data) == 'undefined'){
+				this.initialise();
+			} else {
+				this.data = JSON.parse(data);
+			}
+			
+			callback(this);
 		},
 		
 		initialise : function(){
@@ -65,6 +70,7 @@
 			}
 			switch(fieldDef.type){
 				case "addition":
+				case "custom":
 					field = {
 						val : 0
 					}
@@ -86,7 +92,15 @@
 			return field;
 		},
 		
-		updatefield : function(classname,fieldName,value){
+		updateFields : function(classname,values){
+			var that = this;
+			_.each(values,function(a,b){
+				that.updateField(classname,b,a);
+			});
+			
+		},
+		
+		updateField : function(classname,fieldName,value){
 			var fieldDef = this.options.fields[fieldName];
 			var field = this.data[classname][fieldName];
 			
@@ -104,6 +118,9 @@
 					}
 					field.count++;
 					break;
+				case "custom":
+					field.val = value;
+					break;
 			}
 			
 			if(fieldDef.streak){
@@ -118,8 +135,23 @@
 			}
 		},
 		
+		getFields : function(){
+			return this.data;
+		},
+		
+		getField : function(classname,fieldName){
+			return this.data[classname][fieldName].val;
+		},
+		
 		resetScores : function(){
-			webStorage = {};
+			delete webStorage[this.options.webStorageKey];
+			this.initialise();
+		},
+		
+		save : function(callback){
+			callback = typeof callback == 'function' ? callback : function(){};
+			webStorage[this.options.webStorageKey] = JSON.stringify(this.data);
+			callback(this);
 		}
 		
 	}
