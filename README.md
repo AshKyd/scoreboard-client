@@ -187,7 +187,7 @@ A quick demo
 ===============
 Here is a bit of quick demo code outlining the functionality available.
     
-    var myScore = new scoreboard.Scoreboard({
+    var myScore = new Scoreboard({
         webStorageKey : 'loadsavetest',
         classes : ['river'],
         fields : {
