@@ -37,7 +37,8 @@ The webStorage key to save this data to. Defaults to "scoreboard", so
 you don't really need to set this unless it conflicts with something.
 
 Default:
- "scoreboard"
+
+    "scoreboard"
  
 classes
 -----------------
@@ -48,7 +49,8 @@ several difficulty levels separately such as "easy", "medium" and
 By default there is only one difficulty level, "regular".
 
 Default:
- ['regular']
+
+    ['regular']
  
 fields
 -----------------
@@ -100,6 +102,7 @@ entire data structure at once.
 Load one key
 ---------------
 You can load a single key with the following syntax:
+
     myScores.getField(classname,keyname);
     
 classname is the class specified on init, suck as "easy", "medium" or
@@ -109,9 +112,11 @@ Load all data
 ---------------
 You can load all the data from the scoreboard at once, for instance if
 you wanted to add it to a Mustache template.
+
     myScores.getFields();
     
 The data is stored in the following format:
+
     {
         "className" : {
             "itemName" : {
@@ -129,6 +134,7 @@ Winning streaks can be calculated on any field, but are best used on
 addition fields.
 
 They are true as follows:
+
     no previous values exist || the current value > the last value
     
 This means you are on a winning streak if this is the first time you've
@@ -136,6 +142,7 @@ updated the field, or if the field is continuing to increase from the
 previous values.
 
 You can get the length of the winning streak with:
+
     var winningStreakLength = myScores.getWinningStreak();
 
 A winning streak with a length of zero is not a winning streak.
@@ -146,6 +153,7 @@ Make sure to save the data before you terminate your app, as it's not
 saved automatically.
 
 You can do this with:
+
     myScores.save(callback);
 
 A quick demo
