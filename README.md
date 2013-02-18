@@ -3,6 +3,12 @@ scoreboard-client
 A Javascript library to add scoring & scoreboard functionality to your
 web app.
 
+Why would you use this? Maybe you've got a HTML5 game and want to add
+highscores without the hassle. Maybe you… nope, that's all.
+
+This is a basic library to manage addition, averages, winning streaks,
+for you as well as the underlying data storage.
+
 Usage
 =================
 You can initialise the object like so:
