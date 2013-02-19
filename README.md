@@ -88,7 +88,7 @@ favouriteColour field will let you store a custom string containing the
 favourite colour. The gamesWon field will tally games won, and also keep
 track of whether you're on a winning streak.
 
-Loading Data
+Initial Load
 ===============
 To initialise and load any data, you must call myScores.load, specifying
 a callback.
@@ -100,7 +100,7 @@ sources in the future.
         // do stuff
     });
 
-Retrieving Loaded Data
+Retrieving Data
 ===============
 You can retrieve data in two ways, either one key at a time, or the
 entire data structure at once.
@@ -111,7 +111,7 @@ You can load a single key with the following syntax:
 
     myScores.getField(classname,keyname);
     
-classname is the class specified on init, suck as "easy", "medium" or
+classname is the class specified on init, such as "easy", "medium" or
 "hard". If you haven't customised classes, simply use "regular".
 
 Load all data
