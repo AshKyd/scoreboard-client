@@ -174,6 +174,31 @@ You can get the length of the winning streak with:
 
 A winning streak with a length of zero is not a winning streak.
 
+Other properties available on winning streaks include:
+* lastVal - The last value recorded. This is what streaks are compared with.
+* streakLength - The length of the streak. Same as getWinningStreak().
+* streakMax - The maximum streak length of all time.
+
+These properties can be accessed on the object returned by getField().
+
+Average fields
+===============
+Average fields don't store discrete values, instead storing the average
+of all values saved into the field.
+
+For instance, saving a "10" to an average field will return the value
+"10", but saving "20" to the field then stores the average of the two
+values, which is "15".
+
+Average fields save the following values:
+
+* val - The average value of this field.
+* count - The number of values this average comprises.
+* min - The minimum value ever saved to the field.
+* max - The maximum value ever saved to the field.
+
+You can get these fields using getField().
+
 Saving Data
 ===============
 Make sure to save the data before you terminate your app, as it's not
