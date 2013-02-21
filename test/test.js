@@ -50,6 +50,8 @@ describe('Scoreboard', function(){
 				
 				assert.equal(12.5, myScore.data.regular.moves.val);
 				assert.equal(4, myScore.data.regular.moves.count);
+				assert.equal(20, myScore.data.regular.moves.max);
+				assert.equal(10, myScore.data.regular.moves.min);
 			});
 
 			it('should sum values correctly', function(){
@@ -66,20 +68,29 @@ describe('Scoreboard', function(){
 				
 				myScore.updateField('regular','won',1);
 				assert.equal(1, myScore.data.regular.won.streakLength);
+				assert.equal(1, myScore.data.regular.won.streakMax);
 				
 				myScore.updateField('regular','won',1);
 				myScore.updateField('regular','won',1);
 				myScore.updateField('regular','won',1);
 				myScore.updateField('regular','won',1);
 				assert.equal(5, myScore.data.regular.won.streakLength);
+				assert.equal(5, myScore.data.regular.won.streakMax);
 				
 				myScore.updateField('regular','won',0);
 				assert.equal(0, myScore.data.regular.won.streakLength);
+				assert.equal(5, myScore.data.regular.won.streakMax);
 				
 				myScore.updateField('regular','won',1);
 				myScore.updateField('regular','won',1);
 				myScore.updateField('regular','won',1);
 				assert.equal(3, myScore.data.regular.won.streakLength);
+				assert.equal(5, myScore.data.regular.won.streakMax);
+				
+				myScore.updateField('regular','won',1);
+				myScore.updateField('regular','won',1);
+				myScore.updateField('regular','won',1);
+				assert.equal(6, myScore.data.regular.won.streakMax);
 			});
 			
 			it('should insert multiple values corrrectly',function(){

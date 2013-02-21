@@ -79,7 +79,9 @@
 				case "average":
 					field = {
 						val : null,
-						count : 0
+						count : 0,
+						min : null,
+						max : null
 					}
 					break;
 			}
@@ -87,6 +89,7 @@
 			if(fieldDef.streak){
 				field.lastVal = 0;
 				field.streakLength = 0;
+				field.streakMax = 0;
 			}
 			
 			return field;
@@ -116,6 +119,15 @@
 						// Add the average on
 						field.val = (field.val*field.count+value)/(field.count+1);
 					}
+					
+					if(field.max === null || value > field.max){
+						field.max = value;
+					}
+					
+					if(field.min === null || value < field.min){
+						field.min = value;
+					}
+					
 					field.count++;
 					break;
 				case "custom":
@@ -128,6 +140,9 @@
 					field.streakLength++;
 				} else {
 					field.streakLength = 0;
+				}
+				if(field.streakLength > field.streakMax){
+					field.streakMax = field.streakLength
 				}
 				field.lastVal = field.val;
 			}
