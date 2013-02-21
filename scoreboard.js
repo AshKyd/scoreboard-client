@@ -169,6 +169,10 @@
 			callback = typeof callback == 'function' ? callback : function(){};
 			localStorage[this.options.webStorageKey] = JSON.stringify(this.data);
 			callback(this);
+		},
+		resetStreak : function(classname,fieldName){
+			this.data[classname][fieldName].streakLength = 0;
+			this.data[classname][fieldName].lastVal = null;
 		}
 		
 	}

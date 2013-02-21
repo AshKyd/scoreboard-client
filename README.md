@@ -174,12 +174,22 @@ You can get the length of the winning streak with:
 
 A winning streak with a length of zero is not a winning streak.
 
+Winning Streak Properties
+-------------------------
 Other properties available on winning streaks include:
 * lastVal - The last value recorded. This is what streaks are compared with.
 * streakLength - The length of the streak. Same as getWinningStreak().
 * streakMax - The maximum streak length of all time.
 
 These properties can be accessed on the object returned by getField().
+
+Resetting a Streak
+-------------------------
+Sometimes you might want to reset a winning streak, for instance if you
+have one or more mutually exclusive streaks defined. You can do this
+with the resetStreak(classname,fieldName) command.
+
+    myScores.resetStreak(classname,fieldName);
 
 Average fields
 ===============
