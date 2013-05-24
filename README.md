@@ -239,3 +239,13 @@ Here is a bit of quick demo code outlining the functionality available.
     });
 
 Any issues, feel free to get in touch.
+
+Testing
+===============
+To run the unit tests you'll need to install mocha.
+
+    sudo npm install -g mocha
+
+You can then run the tests like so:
+
+    mocha test.js
