@@ -1,0 +1,14 @@
+{
+  "name": "Scoreboard Client Library",
+  "description": "A library for managing a scoreboard in a game.",
+  "version": "0.0.1",
+  "manifest_version" : 2,
+  "app": {
+    "launch": {
+      "local_path": "test/qunit.html"
+    }
+  },
+  "permissions": [
+    "storage"
+  ]
+}

@@ -4,8 +4,8 @@
  */
 
 var assert = require("assert");
-_ = require('../underscore-min.js');
-scoreboard = require('../scoreboard.js');
+_ = require('../lib/underscore-min.js');
+scoreboard = require('../lib/scoreboard.js');
 
 describe('Scoreboard', function(){
 	
