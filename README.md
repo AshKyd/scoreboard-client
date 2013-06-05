@@ -37,6 +37,19 @@ You can initialise the object like so:
 
 The options are:
 
+storageEngine
+-----------------
+Choose between "webstorage" and "chromesync" depending on your
+needs.
+
+Web storage is a great general-purpose storage engine for web apps, and
+Chrome Sync is a proprietary API for use in Chrome apps which syncs
+across all the users devices.
+
+Default:
+
+	"webstorage"
+
 webStorageKey
 -----------------
 The webStorage key to save this data to. Defaults to "scoreboard", so
